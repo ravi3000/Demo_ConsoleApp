@@ -22,7 +22,7 @@ agent any
         {
             steps
             {                   
-		         archive './ConsoleApp1/ConsoleApp1/bin/Release/**';
+		         archive './ConsoleApp1/ConsoleApp1/bin/Release/**/*.*';
             }
         }
 
