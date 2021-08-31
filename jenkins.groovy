@@ -1,18 +1,18 @@
 node
 {
-  stage(‘SCM’)
+  stage ‘SCM’
   {
   echo “Gathering code form version control”
   }
-  stage(‘BUILD’)
+  stage ‘BUILD’
   {
     echo “Building”
   }
-  stage(‘TEST’)
+  stage ‘TEST’
   {
     echo “Testing”
   }
-  stage(‘DEPLOY’)
+  stage ‘DEPLOY’
   {
     echo "Deploying"
   }
