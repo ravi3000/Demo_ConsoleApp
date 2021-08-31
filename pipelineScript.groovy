@@ -18,13 +18,13 @@ agent any
                     bat 'dotnet msbuild ConsoleApp1/ConsoleApp1.sln /p:Configuration=Release /p:Platform="Any CPU"'
                 }
            }
-        // stage ('Archive')
-        // {
-        //     steps
-        //     {                   
-		//          bat archive 'ProjectName/bin/Release/**';
-        //     }
-        // }
+        stage ('Archive')
+        {
+            steps
+            {                   
+		         archive './ConsoleApp1/ConsoleApp1/bin/Release/**';
+            }
+        }
 
         }
     }
