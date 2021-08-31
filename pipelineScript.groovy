@@ -22,7 +22,8 @@ agent any
         {
             steps
             {                   
-		         archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
+		         //archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
+                 archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
         }
 
