@@ -1,3 +1,4 @@
+def tool="dotnet"
 pipeline {
 agent any
     stages {
@@ -12,7 +13,8 @@ agent any
                 steps
                 {                   
 		            //bat 'nuget restore SolutionName.sln'
-		            bat "\"${tool 'MSBuild'}\" ConsoleApp1.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+                    //bat "\"${tool 'MSBuild'}\" ConsoleApp1\ConsoleApp1.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+                    bat "dotnet msbuild ConsoleApp1\\ConsoleApp1.sln /p:Configuration=Release /p:Platform="Any CPU""
                 }
            }
         // stage ('Archive')
