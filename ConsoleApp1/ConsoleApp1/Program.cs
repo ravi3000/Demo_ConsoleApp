@@ -6,8 +6,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Groovy Pipeline Build!");
-            //Console.ReadLine();
+            Console.WriteLine("Welcome to Jenkins Build!");
+            Console.ReadLine();
         }
     }
 }
