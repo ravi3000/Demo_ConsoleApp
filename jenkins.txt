@@ -1,18 +1,28 @@
+String branch='main'
+String githubUrl='https://github.com/ravi3000/Demo_ConsoleApp.git'
 pipeline {
 agent any
     stages {
-        stage('CheckOut')
-         {
-            steps {
-                echo 'Hello World'
+        stage('Checkout') 
+        {
+            steps
+            {
+                checkout([
+                $class: 'GitSCM', 
+                branches: [[name: 'main']], 
+                doGenerateSubmoduleConfigurations: false, 
+                extensions: [], 
+                submoduleCfg: [], 
+                userRemoteConfigs: [[url: """ "${githubUrl}" """]]])
             }
-        }
+         }
+        
         stage('Build')
            {
                 steps
                 {                   
 		            //bat 'd:/Tools/nuget.exe restore ConsoleApp1/ConsoleApp1.sln'
-		                bat 'dotnet restore ConsoleApp1/ConsoleApp1.sln'
+		            bat 'dotnet restore ConsoleApp1/ConsoleApp1.sln'
                     //bat "\"${tool 'MSBuild'}\" ConsoleApp1\ConsoleApp1.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
                     bat 'dotnet msbuild ConsoleApp1/ConsoleApp1.sln /p:Configuration=Release /p:Platform="Any CPU"'
                 }
@@ -21,7 +31,7 @@ agent any
         {
             steps
             {                   
-		            //archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
+		         //archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
                  archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
         }
