@@ -7,6 +7,10 @@ agent any
         {
             steps
             {
+                git branch: 'main', url: 'https://github.com/ravi3000/Demo_ConsoleApp.git'
+            }
+            /*steps
+            {
                 checkout([
                 $class: 'GitSCM', 
                 branches: [[name: 'main']], 
@@ -14,7 +18,7 @@ agent any
                 extensions: [], 
                 submoduleCfg: [], 
                 userRemoteConfigs: [[url: """ "${githubUrl}" """]]])
-            }
+            }*/
          }
         
         stage('Build')
