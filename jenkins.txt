@@ -31,29 +31,47 @@ agent any
                     bat 'dotnet msbuild ConsoleApp1/ConsoleApp1.sln /p:Configuration=Release /p:Platform="Any CPU"'
                 }
            }
-        stage ('Archive')
+
+        stage('publish')
+        {
+          parallel
+          {
+            stage('win_10_x64')
+            {
+                steps{
+                    bat  'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r win10-x64'
+                }
+                post{
+                    always{
+                    archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/win10-x64/**';
+                    }
+                }
+                
+            }
+            stage('ubuntu_x64')
+            {
+                steps
+                {
+                    bat 'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r ubuntu.16.10-x64'
+                }
+                post{
+                    always{
+                    archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/ubuntu.16.10-x64/**';
+                    }
+                }
+            }
+         }   
+        }
+    
+        /*stage ('Archive')
         {
             steps
             {                   
 		         //archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
                  archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
-        }
-        parallel{
-            stage('win_10_x64')
-            {
-                step{
-                    bat  'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r win10-x64'
-                }
-            }
-            stage('ubuntu_x64')
-            {
-                step
-                {
-                    bat 'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r ubuntu.16.10-x64'
-                }
-            }
-        }
+        }*/
+        
 
         }
     }
