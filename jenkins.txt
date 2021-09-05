@@ -39,6 +39,21 @@ agent any
                  archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
         }
+        parallel{
+            stage('win_10_x64')
+            {
+                step{
+                    bat  'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r win10-x64'
+                }
+            }
+            stage('ubuntu_x64')
+            {
+                step
+                {
+                    bat 'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r ubuntu.16.10-x64'
+                }
+            }
+        }
 
         }
     }
