@@ -9,16 +9,6 @@ agent any
             {
                 git branch: 'main', url: 'https://github.com/ravi3000/Demo_ConsoleApp.git'
             }
-            /*steps
-            {
-                checkout([
-                $class: 'GitSCM', 
-                branches: [[name: 'main']], 
-                doGenerateSubmoduleConfigurations: false, 
-                extensions: [], 
-                submoduleCfg: [], 
-                userRemoteConfigs: [[url: """ "${githubUrl}" """]]])
-            }*/
          }
         
         stage('Build')
@@ -31,47 +21,41 @@ agent any
                     bat 'dotnet msbuild ConsoleApp1/ConsoleApp1.sln /p:Configuration=Release /p:Platform="Any CPU"'
                 }
            }
-
-        stage('publish')
-        {
-          parallel
-          {
-            stage('win_10_x64')
-            {
-                steps{
-                    bat  'dotnet publish ConsoleApp1/ConsoleApp1.sln Release -r win10-x64'
-                }
-                post{
-                    always{
-                         archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
-                         echo 'Publish completed for win_10_x64'
-                    }
-                }
-                
-            }
-            stage('ubuntu_x64')
-            {
-                steps
-                {
-                    bat 'dotnet publish ConsoleApp1/ConsoleApp1.sln Debug -r ubuntu.16.10-x64'
-                }
-                post{
-                    always{
-                    archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Debug/**';
-                    echo 'Publish completed for ubuntu'
-                    }
-                }
-            }
-         }   
-        }
+        stage('Test')
+           {
+               parallel{
+                   stage('win_10_x64_test')
+                   {
+                       steps{
+                           echo 'Testing on win 10 environment'
+                       }
+                       post{
+                           success{
+                           echo 'Prepare report'
+                           }
+                       }
+                   }
+                   stage('ubuntu_x64_text')
+                   {
+                       steps{
+                           echo 'Testing on linux server'
+                       }
+                       post{
+                           success{
+                           echo 'Prepare report for linux environment'
+                           }
+                       }
+                   }
+               }
+           }
     
-        /*stage ('Archive')
+        stage ('Archive')
         {
             steps
             {                   
 		        archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
-        }*/
+        }
     }
 }
 
