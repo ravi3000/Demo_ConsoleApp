@@ -39,12 +39,14 @@ agent any
             stage('win_10_x64')
             {
                 steps{
+                    bat 'dotnet restore ConsoleApp1/ConsoleApp1.sln'
                     bat  'dotnet publish ConsoleApp1/ConsoleApp1.sln Release -r win10-x64'
                 }
                 post{
                     always{
-                        echo 'Publish completed for win_10_x64'
-                    //archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/win10-x64/**';
+                        
+                         archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/win10-x64/**';
+                         echo 'Publish completed for win_10_x64'
                     }
                 }
                 
@@ -53,26 +55,28 @@ agent any
             {
                 steps
                 {
+                    bat 'dotnet restore ConsoleApp1/ConsoleApp1.sln'
                     bat 'dotnet publish ConsoleApp1/ConsoleApp1.sln -c --configuration Release -r ubuntu.16.10-x64'
                 }
                 post{
                     always{
-                        echo 'Publish completed for ubuntu'
-                    //archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/ubuntu.16.10-x64/**';
+                        
+                    archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**/ubuntu.16.10-x64/**';
+                    echo 'Publish completed for ubuntu'
                     }
                 }
             }
          }   
         }
     
-        stage ('Archive')
+        /*stage ('Archive')
         {
             steps
             {                   
 		         //archiveArtifacts './ConsoleApp1/ConsoleApp1/bin/Release/**';
                  archiveArtifacts '/ConsoleApp1/ConsoleApp1/bin/Release/**';
             }
-        }
+        }*/
         
 
         }
